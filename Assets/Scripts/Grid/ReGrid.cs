@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using ReTD.Enums;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class ReGrid : MonoBehaviour {
     public GameObject tile;
     private GameObject[] grid = null;
     private GameObject gridParent;
+    public Dictionary<TileType, GameObject> tiles;
+    public TileSets tileSets;
+    public TileSet set;
 
     public void Generate() {
         Debug.Log("Generating grid");
@@ -27,8 +31,26 @@ public class ReGrid : MonoBehaviour {
             for(int x = 0; x < gridX; x++) {
                 grid[x + (y * gridX)] = Instantiate(tile, new Vector3(x - (gridX / 2) + 0.5f, 0, y - (gridY / 2) + 0.5f), tile.transform.rotation, gridParent.transform);
                 grid[x + (y * gridX)].name = "X: " + x + ", Y: " + y;
+                Tile currentTile = grid[x + (y * gridX)].GetComponent<Tile>();
+                ToggleTileType(grid[x + (y * gridX)], TileType.Buildable);
+                currentTile.grid = this;
+                currentTile.position = new Vector2Int(x, y);
             }
         }
+    }
+
+    public void ToggleTileType(GameObject go, TileType newTileType) {
+        //GameObject newGo = Instantiate(tiles[newTileType])
+        //go.GetComponent<MeshRenderer>().sharedMaterial = materials[newTileType];
+        //go.GetComponent<Tile>().tileType = newTileType;
+    }
+
+    public void MakeTileBase(GameObject tile) {
+        //GameObject go Instantiate(materials[TileType.Base]);
+    }
+
+    private void OnValidate() {
+        //materials = tileSets.GetTileSet(set);
     }
 }
 
