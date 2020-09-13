@@ -7,8 +7,9 @@ using UnityEngine;
 public class ReGrid : MonoBehaviour {
     public int gridX, gridY;
     public GameObject tile;
-    private GameObject[] grid = null;
-    private GameObject gridParent;
+    public GameObject[] grid = null;
+    public GameObject gridParent;
+    public GameObject defenseBase;
     public Dictionary<TileType, GameObject> tiles;
     public TileSets tileSets;
     public TileSet set;
@@ -32,19 +33,24 @@ public class ReGrid : MonoBehaviour {
                 grid[x + (y * gridX)] = Instantiate(tile, new Vector3(x - (gridX / 2) + 0.5f, 0, y - (gridY / 2) + 0.5f), tile.transform.rotation, gridParent.transform);
                 grid[x + (y * gridX)].name = "X: " + x + ", Y: " + y;
                 Tile currentTile = grid[x + (y * gridX)].GetComponent<Tile>();
-                ToggleTileType(grid[x + (y * gridX)], TileType.Buildable);
                 currentTile.grid = this;
                 currentTile.position = new Vector2Int(x, y);
+                ToggleTileType(grid[x + (y * gridX)], TileType.Buildable);
             }
         }
     }
 
     public GameObject ToggleTileType(GameObject oldGo, TileType newTileType) {
         Tile oldTile = oldGo.GetComponent<Tile>();
-        
         GameObject newGo = grid[oldTile.position.x + (oldTile.position.y * gridX)] = Instantiate(tiles[newTileType], oldGo.transform.position, oldGo.transform.rotation, gridParent.transform);
         newGo.name = oldGo.name;
         Tile newTile = newGo.GetComponent<Tile>();
+
+        if(newTileType == TileType.Base) {
+            defenseBase = newGo;
+        } else if(oldTile.tileType == TileType.Base && newTileType != TileType.Base) {
+            defenseBase = null;
+        }
 
         newTile.grid = this;
         newTile.tileType = newTileType;

@@ -34,6 +34,11 @@ public class TileEditor : Editor {
 
         if(sameTileType) {
             TileType nextTileType = Enum.IsDefined(typeof(TileType), tile.tileType + 1) ? (tile.tileType + 1) : TileType.Buildable;
+            if(nextTileType == TileType.Base && (targets.Length>1 || tile.grid.defenseBase)) {
+                nextTileType+=1;
+            }
+
+
             if(GUILayout.Button("Switch to " + nextTileType.ToString())) {
                 List<GameObject> newSelection = new List<GameObject>();
                 foreach(Tile t in targets) {
@@ -43,7 +48,7 @@ public class TileEditor : Editor {
             }
         }
 
-        if(targets.Length < 2) {
+        if(targets.Length < 2 && !tile.grid.defenseBase) {
             if(GUILayout.Button("Make Tile Into Base")) {
                 Selection.activeGameObject = tile.grid.MakeTileBase(tile.gameObject);
             }
