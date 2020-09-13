@@ -39,18 +39,25 @@ public class ReGrid : MonoBehaviour {
         }
     }
 
-    public void ToggleTileType(GameObject go, TileType newTileType) {
-        //GameObject newGo = Instantiate(tiles[newTileType])
-        //go.GetComponent<MeshRenderer>().sharedMaterial = materials[newTileType];
-        //go.GetComponent<Tile>().tileType = newTileType;
+    public GameObject ToggleTileType(GameObject oldGo, TileType newTileType) {
+        Tile oldTile = oldGo.GetComponent<Tile>();
+        
+        GameObject newGo = grid[oldTile.position.x + (oldTile.position.y * gridX)] = Instantiate(tiles[newTileType], oldGo.transform.position, oldGo.transform.rotation, gridParent.transform);
+        newGo.name = oldGo.name;
+        Tile newTile = newGo.GetComponent<Tile>();
+
+        newTile.grid = this;
+        newTile.tileType = newTileType;
+        DestroyImmediate(oldGo);
+        return newGo;
     }
 
-    public void MakeTileBase(GameObject tile) {
-        //GameObject go Instantiate(materials[TileType.Base]);
+    public GameObject MakeTileBase(GameObject oldGo) {
+        return ToggleTileType(oldGo, TileType.Base);
     }
 
     private void OnValidate() {
-        //materials = tileSets.GetTileSet(set);
+        tiles = tileSets.GetTileSet(set);
     }
 }
 

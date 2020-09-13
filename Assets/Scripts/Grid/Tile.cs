@@ -8,10 +8,10 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
     public TileType tileType;
     public ReGrid grid;
-    public Vector2 position;
+    public Vector2Int position;
 
-    public void ToggleTileType(TileType nextTileType) {
-        grid.ToggleTileType(gameObject, nextTileType);
+    public GameObject ToggleTileType(TileType nextTileType) {
+        return grid.ToggleTileType(gameObject, nextTileType);
     }
 }
 
@@ -35,15 +35,17 @@ public class TileEditor : Editor {
         if(sameTileType) {
             TileType nextTileType = Enum.IsDefined(typeof(TileType), tile.tileType + 1) ? (tile.tileType + 1) : TileType.Buildable;
             if(GUILayout.Button("Switch to " + nextTileType.ToString())) {
+                List<GameObject> newSelection = new List<GameObject>();
                 foreach(Tile t in targets) {
-                    t.ToggleTileType(nextTileType);
+                    newSelection.Add(t.ToggleTileType(nextTileType));
                 }
+                Selection.objects = newSelection.ToArray();
             }
         }
 
         if(targets.Length < 2) {
             if(GUILayout.Button("Make Tile Into Base")) {
-                tile.grid.MakeTileBase(tile.gameObject);
+                Selection.activeGameObject = tile.grid.MakeTileBase(tile.gameObject);
             }
         }
     }

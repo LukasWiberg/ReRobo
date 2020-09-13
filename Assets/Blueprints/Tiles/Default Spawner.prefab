@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c12ccdd7006da84984bc6efce115b6b, type: 2}
+  - {fileID: 2100000, guid: ae1821b69e129ee48b88a1ab1aeb6be1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 3445924751598435544}
   - component: {fileID: 9174497842474337614}
   m_Layer: 8
-  m_Name: default Base
+  m_Name: Default Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -270,7 +270,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8c12ccdd7006da84984bc6efce115b6b, type: 2}
+  - {fileID: 2100000, guid: ae1821b69e129ee48b88a1ab1aeb6be1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
