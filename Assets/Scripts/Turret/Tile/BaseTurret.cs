@@ -8,9 +8,23 @@ public class BaseTurret : MonoBehaviour {
     public float projectileSpeed;
     public float range;
     public GameObject projectile;
+    public GameObject nuzzle;
+    public ParticleSystem muzzleSmokeParticles;
+    public ParticleSystem muzzleExplosionParticles;
 
+    private Animator muzzleAnimator;
     private GameObject target;
     private float lastProjectile;
+
+    private void Awake() {
+        muzzleAnimator = nuzzle.transform.parent.GetComponent<Animator>();
+    }
+
+    private void Update() {
+        if(target) {
+            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+        }
+    }
 
     private void FixedUpdate() {
         lastProjectile += Time.fixedDeltaTime;
@@ -56,10 +70,14 @@ public class BaseTurret : MonoBehaviour {
 
     private void Shoot(GameObject target) {
         lastProjectile = lastProjectile % (60/attackSpeed);
-        GameObject go = Instantiate(projectile, transform.position, transform.rotation);
+        GameObject go = Instantiate(projectile, nuzzle.transform.position, nuzzle.transform.rotation);
         BaseProjectile projectileBase = go.GetComponent<BaseProjectile>();
         projectileBase.target = target;
         projectileBase.damage = damage;
         projectileBase.speed = projectileSpeed;
+
+        muzzleExplosionParticles.Play();
+        muzzleSmokeParticles.Play();
+        muzzleAnimator.Play("Muzzle");
     }
 }

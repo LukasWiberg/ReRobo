@@ -6,8 +6,10 @@ public class BaseProjectile : MonoBehaviour {
     public GameObject target;
     public float speed;
     public float damage;
+    private bool disabled = false;
 
     private void FixedUpdate() {
+
         if(!target) {
             Destroy(gameObject);
             return;
@@ -22,7 +24,12 @@ public class BaseProjectile : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
+        if(disabled) {
+            return;
+        }
+
         collision.gameObject.GetComponent<BaseEnemy>().Damage(damage);
+        disabled = true;
         Destroy(gameObject);
     }
 }
