@@ -7,6 +7,7 @@ namespace ReTD.Enums {
         Buildable = 0,
         Path = 1,
         Base = 2,
-        Spawner = 3
+        Spawner = 3,
+        Turret = 4
     }
 }

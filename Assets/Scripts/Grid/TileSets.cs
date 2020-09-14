@@ -11,7 +11,6 @@ using UnityEngine.UIElements;
 public class TileSets : MonoBehaviour {
     public GameObject[] standard = new GameObject[Enum.GetNames(typeof(TileType)).Length];
     public GameObject[] grass = new GameObject[Enum.GetNames(typeof(TileType)).Length];
-    // public int a = 5;
 
     public Dictionary<TileType, GameObject> GetTileSet(TileSet set) {
         switch(set) {

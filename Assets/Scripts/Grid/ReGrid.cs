@@ -62,8 +62,12 @@ public class ReGrid : MonoBehaviour {
         return ToggleTileType(oldGo, TileType.Base);
     }
 
-    private void OnValidate() {
+    public void Validate() {
         tiles = tileSets.GetTileSet(set);
+    }
+
+    private void OnValidate() {
+        Validate();
     }
 }
 
@@ -75,6 +79,10 @@ public class GridEditor : Editor {
 
         if(GUILayout.Button("Generate")) {
             grid.Generate();
+        }
+
+        if(GUILayout.Button("Validate")) {
+            grid.Validate();
         }
     }
 }

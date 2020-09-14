@@ -18,6 +18,6 @@ public class DefenseBase : MonoBehaviour {
 
     void OnCollisionEnter(Collision collision) {
         defenseBase.health -= 1;
-        Destroy(collision.transform.gameObject);
+        collision.gameObject.GetComponent<BaseEnemy>().Die(false);
     }
 }

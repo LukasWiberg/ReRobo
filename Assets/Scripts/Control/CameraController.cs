@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
     public float speed = 0.1f;
-    void Update() {
+    public GameObject UI;
+
+    private void Awake() {
+        Instantiate(UI, transform);
+    }
+
+    private void Update() {
         Vector3 delta = Vector3.zero;
         if(Input.GetKey(KeyCode.W)) {
             delta += new Vector3(0, 0, 1);
