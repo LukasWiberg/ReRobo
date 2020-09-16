@@ -66,8 +66,6 @@ public class BaseTurret : MonoBehaviour {
         for(int i = 0; i < enemies.Length; i++) {
             float delta = Vector3.Distance(transform.position, enemies[i].transform.position);
             if(delta < range) {
-                Debug.Log(enemies[i].transform);
-                Debug.Log(enemies[i].transform.GetChild(0));
                 target = enemies[i].transform.GetChild(0).gameObject;
             }
         }
