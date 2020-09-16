@@ -10,12 +10,16 @@ public class TurretBarrel : MonoBehaviour {
     public GameObject nozzle;
     public GameObject projectile;
 
+    public float animationSpeed;
     public float damage;
     public float projectileSpeed;
+    public Vector3 projectileScale;
 
 
     void Start() {
-        
+        for(int i = 0; i < shootAnimators.Length; i++) {
+            shootAnimators[i].speed = animationSpeed;
+        }
     }
 
     public void Shoot(GameObject target) { 
@@ -24,6 +28,7 @@ public class TurretBarrel : MonoBehaviour {
         projectileBase.target = target;
         projectileBase.damage = damage;
         projectileBase.speed = projectileSpeed;
+        projectile.transform.localScale = projectileScale;
 
 
         for(int i = 0; i<shootParticles.Length; i++) {

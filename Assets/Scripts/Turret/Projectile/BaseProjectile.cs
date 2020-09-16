@@ -16,6 +16,7 @@ public class BaseProjectile : MonoBehaviour {
         }
         
         transform.LookAt(target.transform);
+
         Vector3 delta = target.transform.position - transform.position;
         if(delta.magnitude>speed) {
             delta = delta.normalized * speed;

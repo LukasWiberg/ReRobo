@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    public GameObject camera;
+    public new GameObject camera;
 
     public GameObject UI;
 

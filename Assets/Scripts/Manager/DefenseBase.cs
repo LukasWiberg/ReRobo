@@ -9,9 +9,7 @@ public class DefenseBase : MonoBehaviour {
         defenseBase = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
     

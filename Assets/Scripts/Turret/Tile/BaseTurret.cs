@@ -8,6 +8,8 @@ public class BaseTurret : MonoBehaviour {
     public float projectileSpeed;
     public float range;
     public TurretBarrel[] barrels;
+    public float animationSpeed = 1;
+    public Vector3 projectileScale = Vector3.one;
 
 
     private int nextBarrel = 0;
@@ -18,6 +20,8 @@ public class BaseTurret : MonoBehaviour {
         for(int i = 0; i < barrels.Length; i++) {
             barrels[i].damage = damage;
             barrels[i].projectileSpeed = projectileSpeed;
+            barrels[i].animationSpeed = animationSpeed;
+            barrels[i].projectileScale = projectileScale;
         }
     }
 
@@ -60,10 +64,11 @@ public class BaseTurret : MonoBehaviour {
     private void GetNewTarget() {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         for(int i = 0; i < enemies.Length; i++) {
-            Vector3 delta = (transform.position - enemies[i].transform.position);
-            delta = new Vector3(delta.x, 0, delta.y);
-            if(delta.magnitude < range) {
-                target = enemies[i];
+            float delta = Vector3.Distance(transform.position, enemies[i].transform.position);
+            if(delta < range) {
+                Debug.Log(enemies[i].transform);
+                Debug.Log(enemies[i].transform.GetChild(0));
+                target = enemies[i].transform.GetChild(0).gameObject;
             }
         }
     }
