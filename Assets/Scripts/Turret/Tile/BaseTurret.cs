@@ -10,6 +10,7 @@ public class BaseTurret : MonoBehaviour {
     public TurretBarrel[] barrels;
     public float animationSpeed = 1;
     public Vector3 projectileScale = Vector3.one;
+    public GameObject projectile;
 
 
     private int nextBarrel = 0;
@@ -22,6 +23,7 @@ public class BaseTurret : MonoBehaviour {
             barrels[i].projectileSpeed = projectileSpeed;
             barrels[i].animationSpeed = animationSpeed;
             barrels[i].projectileScale = projectileScale;
+            barrels[i].projectile = projectile;
         }
     }
 

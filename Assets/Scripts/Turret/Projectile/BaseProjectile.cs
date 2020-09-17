@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class BaseProjectile : MonoBehaviour {
     public GameObject target;
-    public float speed;
-    public float damage;
+    public float speed = 1;
+    public float damage = 1;
     private bool disabled = false;
 
     private void FixedUpdate() {
-
         if(!target) {
             Destroy(gameObject);
             return;
@@ -20,11 +19,15 @@ public class BaseProjectile : MonoBehaviour {
         Vector3 delta = target.transform.position - transform.position;
         if(delta.magnitude>speed) {
             delta = delta.normalized * speed;
-        }
-        transform.position +=  delta;
+            transform.position += delta;
+        } else {
+            RaycastHit hit;
+            Physics.Raycast(transform.position, transform.position - target.transform.position, out hit);
+            transform.position = hit.point;
+        }        
     }
 
-    private void OnCollisionEnter(Collision collision) {
+    public void OnCollisionEnter(Collision collision) {
         if(disabled) {
             return;
         }

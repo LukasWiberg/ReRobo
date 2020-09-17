@@ -8,7 +8,7 @@ public class TurretBarrel : MonoBehaviour {
     public ParticleSystem[] shootParticles;
 
     public GameObject nozzle;
-    public GameObject projectile;
+    public GameObject projectile { get; set; }
 
     public float animationSpeed;
     public float damage;
