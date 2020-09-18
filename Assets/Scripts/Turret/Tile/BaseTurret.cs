@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseTurret : MonoBehaviour {
+
+
+    [Header("Projectile")]
     public float damage;
     public float attackSpeed;
     public float projectileSpeed;
-    public float range;
-    public TurretBarrel[] barrels;
-    public float animationSpeed = 1;
-    public Vector3 projectileScale = Vector3.one;
     public GameObject projectile;
+    public Vector3 projectileScale = Vector3.one;
 
+
+    [Header("References")]
+    public TurretBarrel[] barrels;
+
+    [Header("Turret")]
+    public float range;
+    public float animationSpeed = 1;
+    public float rotationSpeed;
+    public float shootAngle;
+    
 
     private int nextBarrel = 0;
     private GameObject target;
@@ -29,7 +39,14 @@ public class BaseTurret : MonoBehaviour {
 
     private void Update() {
         if(target) {
-            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+            Vector3 targetDir = target.transform.position - transform.position;
+            Vector3 forward = transform.forward;
+            float angle = Vector3.SignedAngle(targetDir, forward, Vector3.up);
+            if(angle>(rotationSpeed*Time.deltaTime)) {
+                angle = rotationSpeed*Time.deltaTime;
+            }
+
+            transform.Rotate(new Vector3(0, -angle, 0));
         }
     }
 
@@ -74,13 +91,18 @@ public class BaseTurret : MonoBehaviour {
     }
 
     private void Shoot(GameObject target) {
-        lastProjectile = lastProjectile % (60/attackSpeed);
-        barrels[nextBarrel].Shoot(target);
+        Vector3 targetDir = target.transform.position - transform.position;
+        Vector3 forward = transform.forward;
+        float angle = Vector3.SignedAngle(targetDir, forward, Vector3.up);
+        if(Mathf.Abs(angle)<=shootAngle) {
+            lastProjectile = lastProjectile % (60 / attackSpeed);
+            barrels[nextBarrel].Shoot(target);
 
-        nextBarrel++;
-        
-        if(nextBarrel>=barrels.Length) {
-            nextBarrel = 0;
+            nextBarrel++;
+
+            if(nextBarrel >= barrels.Length) {
+                nextBarrel = 0;
+            }
         }
     }
 }

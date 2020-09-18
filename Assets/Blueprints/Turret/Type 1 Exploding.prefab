@@ -179,14 +179,16 @@ MonoBehaviour:
   damage: 8
   attackSpeed: 300
   projectileSpeed: 7.5
-  range: 12
+  projectile: {fileID: 6625472048413016428, guid: a166adce6457b704f855675470de6af4, type: 3}
+  projectileScale: {x: 0.5, y: 0.5, z: 0.5}
   barrels:
   - {fileID: 8450267990460689032}
   - {fileID: 7082633659649617096}
   - {fileID: 2052069572438797473}
+  range: 12
   animationSpeed: 1.5
-  projectileScale: {x: 0.5, y: 0.5, z: 0.5}
-  projectile: {fileID: 6625472048413016428, guid: a166adce6457b704f855675470de6af4, type: 3}
+  rotationSpeed: 5
+  shootAngle: 5
 --- !u!1 &3902636821749449057
 GameObject:
   m_ObjectHideFlags: 0

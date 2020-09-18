@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TurretBarrel : MonoBehaviour {
+    [Header("Shooting")]
     public Animator[] shootAnimators;
     public string[] shootAnimtorKeys;
     public ParticleSystem[] shootParticles;
 
-    public GameObject nozzle;
-    public GameObject projectile { get; set; }
 
-    public float animationSpeed;
+    [Header("Object References")]
+    public GameObject nozzle;
+
+    [Header("Projectile")]
     public float damage;
     public float projectileSpeed;
     public Vector3 projectileScale;
+
+
+    [Header("Turret")]
+    public float animationSpeed;
+
+    public GameObject projectile { get; set; }
 
 
     void Start() {

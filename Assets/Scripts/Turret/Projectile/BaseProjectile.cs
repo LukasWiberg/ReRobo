@@ -6,6 +6,10 @@ public class BaseProjectile : MonoBehaviour {
     public GameObject target;
     public float speed = 1;
     public float damage = 1;
+
+    public float shootAngle;
+    public float rotationSpeed;
+
     private bool disabled = false;
 
     private void FixedUpdate() {
@@ -24,7 +28,7 @@ public class BaseProjectile : MonoBehaviour {
             RaycastHit hit;
             Physics.Raycast(transform.position, transform.position - target.transform.position, out hit);
             transform.position = hit.point;
-        }        
+        }
     }
 
     public void OnCollisionEnter(Collision collision) {
