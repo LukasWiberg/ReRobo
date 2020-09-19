@@ -3,24 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    [Header("Player Stats")]
     public CharacterController characterController;
     public float gravity = -9.82f;
     public float jumpHeight = 3f;
     public float speed = 3f;
     public Vector3 velocity;
 
+
+    [Header("Player Preferences")]
     public float mouseSensitivity = 100f;
 
+
+    [Header("Refernces")]
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
+    public float groundDistance = 0.04f;
     public LayerMask groundMask;
     public GameObject playerCamera;
 
+
+    [Header("UI Components")]
     public GameObject UI;
+    public GameObject turretUI;
+    public GameObject tileUI;
 
     private bool isGrounded;
     private float xRotation = 0f;
     private bool locked = false;
+    private GameObject target;
+    private InteractableUI activeUI;
 
     private void Start() {
         Instantiate(UI, transform);
@@ -48,11 +59,24 @@ public class PlayerController : MonoBehaviour {
 
     private void Raycast() {
         RaycastHit hit;
-        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * 5, Color.red, 2);
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 5, LayerMask.GetMask("Turret"))) {
-            Debug.Log("Raycast hit turret: " + hit.collider.name);
-        } else if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward*5, out hit, 5, LayerMask.GetMask("Tile"))) {
-            Debug.Log("Raycast hit tile: " + hit.collider.name);
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 5, LayerMask.GetMask(new string[] { "Turret", "Tile" }))) {
+            if(hit.collider.gameObject != target) {
+                if(activeUI) {
+                    Destroy(activeUI.gameObject);
+                }
+                target = hit.collider.gameObject;
+                if(target.layer == LayerMask.NameToLayer("Turret")) {
+                    activeUI = Instantiate(turretUI, transform).GetComponent<InteractableUI>();
+                } else {
+                    activeUI = Instantiate(tileUI, transform).GetComponent<InteractableUI>();
+                }
+                activeUI.target = target;
+            }
+        } else {
+            target = null;
+            if(activeUI) {
+                Destroy(activeUI.gameObject);
+            }
         }
     }
 

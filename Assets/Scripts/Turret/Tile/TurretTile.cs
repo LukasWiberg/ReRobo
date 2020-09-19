@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class TurretTile : MonoBehaviour {
-    public GameObject turret { get; private set; }
+    public GameObject turret;
     public Transform turretBase;
     public TurretVision turretVision;
     public int turretIndex = -1;
@@ -15,7 +15,11 @@ public class TurretTile : MonoBehaviour {
     }
 
     public void SetTurret(GameObject turret) {
+#if UNITY_EDITOR
         DestroyImmediate(this.turret);
+#else
+        Destroy(this.turret);
+#endif
         if(turret) {
             this.turret = Instantiate(turret, turretBase.position, Quaternion.Euler(0, 0, 0), turretBase);
             turretVision.turret = this.turret.GetComponent<BaseTurret>();

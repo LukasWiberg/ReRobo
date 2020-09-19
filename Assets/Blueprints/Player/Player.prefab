@@ -91,6 +91,8 @@ MonoBehaviour:
     m_Bits: 256
   playerCamera: {fileID: 3094462323996149635}
   UI: {fileID: 7867189496663903599, guid: 2201fc40920d7ee4e8751d7bbcd98690, type: 3}
+  turretUI: {fileID: 5051125258939878734, guid: e7a361e3315820041b7876c8cd74ed23, type: 3}
+  tileUI: {fileID: 5936797685673775855, guid: bae50a3b286d87442b70c21fc746a14e, type: 3}
 --- !u!143 &3094462323764883106
 CharacterController:
   m_ObjectHideFlags: 0
