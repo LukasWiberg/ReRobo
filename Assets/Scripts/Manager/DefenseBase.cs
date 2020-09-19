@@ -1,12 +1,13 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.General;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DefenseBase : MonoBehaviour {
-    private GameManager defenseBase; 
+    private GameManager gameManager; 
     
     void Awake() {
-        defenseBase = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gameManager = Helpers.GetGameManager();
     }
 
     void Update() {
@@ -15,7 +16,7 @@ public class DefenseBase : MonoBehaviour {
     
 
     void OnCollisionEnter(Collision collision) {
-        defenseBase.health -= 1;
+        gameManager.health -= 1;
         collision.gameObject.GetComponent<BaseEnemy>().Die(false);
     }
 }

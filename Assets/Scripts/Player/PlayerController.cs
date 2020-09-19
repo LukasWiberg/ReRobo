@@ -14,13 +14,13 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    public new GameObject camera;
+    public GameObject playerCamera;
 
     public GameObject UI;
 
     private bool isGrounded;
     private float xRotation = 0f;
-
+    private bool locked = false;
 
     private void Start() {
         Instantiate(UI, transform);
@@ -28,9 +28,32 @@ public class PlayerController : MonoBehaviour {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void UnlockControlls() {
+        locked = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public void LockControlls() {
+        locked = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private void Update() {
-        PlayerMovement();
-        MouseMovement();
+        if(!locked) {
+            PlayerMovement();
+            MouseMovement();
+            Raycast();
+        }
+    }
+
+    private void Raycast() {
+        RaycastHit hit;
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * 5, Color.red, 2);
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 5, LayerMask.GetMask("Turret"))) {
+            Debug.Log("Raycast hit turret: " + hit.collider.name);
+        } else if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward*5, out hit, 5, LayerMask.GetMask("Tile"))) {
+            Debug.Log("Raycast hit tile: " + hit.collider.name);
+        }
     }
 
     private void MouseMovement() {
@@ -39,7 +62,7 @@ public class PlayerController : MonoBehaviour {
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        camera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
     }

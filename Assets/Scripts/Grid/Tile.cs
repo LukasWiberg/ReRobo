@@ -15,6 +15,7 @@ public class Tile : MonoBehaviour {
     }
 }
 
+#if UNITY_EDITOR
 [CanEditMultipleObjects]
 [CustomEditor(typeof(Tile))]
 public class TileEditor : Editor {
@@ -55,3 +56,4 @@ public class TileEditor : Editor {
         }
     }
 }
+#endif

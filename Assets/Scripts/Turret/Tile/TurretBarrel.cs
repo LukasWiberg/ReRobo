@@ -31,7 +31,7 @@ public class TurretBarrel : MonoBehaviour {
     }
 
     public void Shoot(GameObject target) { 
-        GameObject go = Instantiate(projectile, nozzle.transform.position, nozzle.transform.rotation);
+        GameObject go = Instantiate(projectile, nozzle.transform.position, Quaternion.identity);
         BaseProjectile projectileBase = go.GetComponent<BaseProjectile>();
         projectileBase.target = target;
         projectileBase.damage = damage;

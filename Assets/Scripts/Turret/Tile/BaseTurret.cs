@@ -7,7 +7,6 @@ public class BaseTurret : MonoBehaviour {
 
     [Header("Projectile")]
     public float damage;
-    public float attackSpeed;
     public float projectileSpeed;
     public GameObject projectile;
     public Vector3 projectileScale = Vector3.one;
@@ -17,6 +16,8 @@ public class BaseTurret : MonoBehaviour {
     public TurretBarrel[] barrels;
 
     [Header("Turret")]
+    public new string name;
+    public float attackSpeed;
     public float range;
     public float animationSpeed = 1;
     public float rotationSpeed;

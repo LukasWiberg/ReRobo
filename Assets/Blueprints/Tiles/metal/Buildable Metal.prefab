@@ -52,7 +52,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1a7c70bcaadff77499e02ee83d846175, type: 2}
+  - {fileID: 2100000, guid: 01840924687156340a95a5aab6d21969, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,9 +106,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5443747687325301541}
   - component: {fileID: 9174497842474337614}
-  - component: {fileID: 1384180276203558416}
   m_Layer: 8
-  m_Name: Turret Tile
+  m_Name: Buildable Metal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,18 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055dfd126f673e3449980b43e0e47d91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileType: 1
+  tileType: 0
   grid: {fileID: 0}
   position: {x: 0, y: 0}
---- !u!114 &1384180276203558416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5443747687325301563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c542ff93a2c6944f849d039cfdc20f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -11,6 +11,7 @@ using UnityEngine.UIElements;
 public class TileSets : MonoBehaviour {
     public GameObject[] standard = new GameObject[Enum.GetNames(typeof(TileType)).Length];
     public GameObject[] grass = new GameObject[Enum.GetNames(typeof(TileType)).Length];
+    public GameObject[] metal = new GameObject[Enum.GetNames(typeof(TileType)).Length];
 
     public Dictionary<TileType, GameObject> GetTileSet(TileSet set) {
         switch(set) {
@@ -18,6 +19,8 @@ public class TileSets : MonoBehaviour {
                 return GenerateTileSet(standard);
             case TileSet.Grass:
                 return GenerateTileSet(grass);
+            case TileSet.Metal:
+                return GenerateTileSet(metal);
 
             default:
                 return GenerateTileSet(standard);
@@ -38,4 +41,5 @@ public class TileSets : MonoBehaviour {
 public enum TileSet {
     Standard = 0,
     Grass = 1,
+    Metal = 2
 }
