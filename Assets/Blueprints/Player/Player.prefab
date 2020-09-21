@@ -79,16 +79,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 3094462323764883106}
-  gravity: -9.82
-  jumpHeight: 3
+  gravity: 9.82
   speed: 12
-  velocity: {x: 0, y: 0, z: 0}
-  mouseSensitivity: 200
+  mouseSensitivity: 2
   groundCheck: {fileID: 3094462323524772193}
-  groundDistance: 0.02
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
   playerCamera: {fileID: 3094462323996149635}
   UI: {fileID: 7867189496663903599, guid: 2201fc40920d7ee4e8751d7bbcd98690, type: 3}
   turretUI: {fileID: 5051125258939878734, guid: e7a361e3315820041b7876c8cd74ed23, type: 3}
@@ -385,5 +379,6 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0

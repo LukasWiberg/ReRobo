@@ -10,13 +10,8 @@ public class DefenseBase : MonoBehaviour {
         gameManager = Helpers.GetGameManager();
     }
 
-    void Update() {
-        
-    }
-    
-
-    void OnCollisionEnter(Collision collision) {
+    private void OnTriggerEnter(Collider other) {
         gameManager.health -= 1;
-        collision.gameObject.GetComponent<BaseEnemy>().Die(false);
+        Helpers.GetTypeInParents<BaseEnemy>(other.transform).Die(false);
     }
 }

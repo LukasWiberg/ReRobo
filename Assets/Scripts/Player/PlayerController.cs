@@ -1,24 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour {
     [Header("Player Stats")]
     public CharacterController characterController;
-    public float gravity = -9.82f;
-    public float jumpHeight = 3f;
+    public float gravity = 9.82f;
     public float speed = 3f;
-    public Vector3 velocity;
 
 
     [Header("Player Preferences")]
-    public float mouseSensitivity = 100f;
+    public float mouseSensitivity = 2f;
 
 
     [Header("Refernces")]
     public Transform groundCheck;
-    public float groundDistance = 0.04f;
-    public LayerMask groundMask;
     public GameObject playerCamera;
 
 
@@ -27,15 +25,13 @@ public class PlayerController : MonoBehaviour {
     public GameObject turretUI;
     public GameObject tileUI;
 
-    private bool isGrounded;
-    private float xRotation = 0f;
     private bool locked = false;
     private GameObject target;
     private InteractableUI activeUI;
+    private float verticalSpeed = 0;
 
     private void Start() {
         Instantiate(UI, transform);
-        velocity = Vector3.zero;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -59,13 +55,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Raycast() {
         RaycastHit hit;
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 5, LayerMask.GetMask(new string[] { "Turret", "Tile" }))) {
+
+        Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward);
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 1f, LayerMask.GetMask(new string[] { "TurretUI", "Tile" }))) {
             if(hit.collider.gameObject != target) {
                 if(activeUI) {
                     Destroy(activeUI.gameObject);
                 }
                 target = hit.collider.gameObject;
-                if(target.layer == LayerMask.NameToLayer("Turret")) {
+                if(target.layer == LayerMask.NameToLayer("TurretUI")) {
                     activeUI = Instantiate(turretUI, transform).GetComponent<InteractableUI>();
                 } else {
                     activeUI = Instantiate(tileUI, transform).GetComponent<InteractableUI>();
@@ -81,39 +79,31 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void MouseMovement() {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float horizontalRotation = Input.GetAxis("Mouse X");
+        float verticalRotation = Input.GetAxis("Mouse Y");
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+        transform.Rotate(0, horizontalRotation * mouseSensitivity, 0);
+        playerCamera.transform.Rotate(-verticalRotation * mouseSensitivity, 0, 0);
+
+        Vector3 currentRotation = playerCamera.transform.localEulerAngles;
+        if(currentRotation.x > 180)
+            currentRotation.x -= 360;
+        currentRotation.x = Mathf.Clamp(currentRotation.x, -90, 90);
+        playerCamera.transform.localRotation = Quaternion.Euler(currentRotation);
 
     }
 
     private void PlayerMovement() {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        float horizontalMove = Input.GetAxis("Horizontal");
+        float verticalMove = Input.GetAxis("Vertical");
 
-        if(isGrounded && velocity.y < 0) {
-            velocity.y = -2f * Time.deltaTime;
-        }
+        if(characterController.isGrounded)
+            verticalSpeed = 0;
+        else
+            verticalSpeed -= gravity * Time.deltaTime;
+        Vector3 gravityMove = new Vector3(0, verticalSpeed, 0);
 
-
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-
-        characterController.Move(move * speed * Time.deltaTime);
-
-        //if(Input.GetButtonDown("Jump") && isGrounded) {
-        //    velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        //}
-
-        if(velocity.y > 0) { Debug.Log(velocity); }
-
-        velocity.y += gravity * Time.deltaTime;
-
-        characterController.Move(velocity);
+        Vector3 move = transform.forward * verticalMove + transform.right * horizontalMove;
+        characterController.Move(speed * Time.deltaTime * move + gravityMove * Time.deltaTime);
     }
 }

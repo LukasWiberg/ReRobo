@@ -16,6 +16,8 @@ public class ReGrid : MonoBehaviour {
 
     public void Generate() {
         Debug.Log("Generating grid");
+        Vector3 oldScale = transform.parent.localScale;
+        transform.parent.localScale = Vector3.one;
         if(transform.Find("Grid Parent")) {
             DestroyImmediate(transform.Find("Grid Parent").gameObject);
         }
@@ -38,6 +40,7 @@ public class ReGrid : MonoBehaviour {
                 ToggleTileType(grid[x + (y * gridX)], TileType.Buildable);
             }
         }
+        transform.parent.localScale = oldScale;
     }
 
     public GameObject ToggleTileType(GameObject oldGo, TileType newTileType) {

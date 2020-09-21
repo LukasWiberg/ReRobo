@@ -10,13 +10,18 @@ public class TurretVision : MonoBehaviour {
 
 
     private void Start() {
-        title.text = turret.name;
-        attackspeed.text = "RPM: " + turret.attackSpeed + "";
-        damage.text = "Damage: " + turret.damage+ "";
-        range.text = "range: " + turret.range + "m";
-        projectile.text = "" + turret.projectile.GetComponent<BaseProjectile>().name + "";
-        rotationSpeed.text = "Rotation: " + turret.rotationSpeed+ "°/sec";
-        shootingAngle.text = "Shooting angle: " + turret.rotationSpeed + "°";
+        UpdateTest();
+    }
 
+    public void UpdateTest() {
+        if(turret) {
+            title.text = turret.name;
+            attackspeed.text = "RPM: " + turret.attackSpeed + "";
+            damage.text = "Damage: " + turret.damage + "";
+            range.text = "range: " + turret.range + "m";
+            projectile.text = "" + turret.projectile.GetComponent<BaseProjectile>().name + "";
+            rotationSpeed.text = "Rotation: " + turret.rotationSpeed + "°/sec";
+            shootingAngle.text = "Shooting angle: " + turret.rotationSpeed + "°";
+        }
     }
 }
