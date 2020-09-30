@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3466590828540469187}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.01}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -44,12 +44,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   standard:
-  - {fileID: 5443747687325301563, guid: fbf585f86b397f24a89af290288db51c, type: 3}
+  - {fileID: 5443747687325301563, guid: bdecf428d732ab94fbb7b721a38cbc63, type: 3}
   - {fileID: 5443747687325301563, guid: 2e627b8eed88b9748917e047dfbb0b65, type: 3}
   - {fileID: 5443747687325301563, guid: 28285df05cc23c244a808d341640f451, type: 3}
   - {fileID: 5443747687325301563, guid: 084a556ebf442e24eaf082ba9754ab48, type: 3}
+  - {fileID: 5443747687325301563, guid: 41632d0897066304d81dbe4cdf3ea59d, type: 3}
   grass:
-  - {fileID: 5443747687325301563, guid: fbf585f86b397f24a89af290288db51c, type: 3}
+  - {fileID: 5443747687325301563, guid: bdecf428d732ab94fbb7b721a38cbc63, type: 3}
   - {fileID: 5443747687325301563, guid: 2e627b8eed88b9748917e047dfbb0b65, type: 3}
   - {fileID: 5443747687325301563, guid: 28285df05cc23c244a808d341640f451, type: 3}
   - {fileID: 5443747687325301563, guid: 084a556ebf442e24eaf082ba9754ab48, type: 3}
+  - {fileID: 5443747687325301563, guid: 41632d0897066304d81dbe4cdf3ea59d, type: 3}
+  metal:
+  - {fileID: 5443747687325301563, guid: 731f4ec8986f33f4983a0f30216efcb7, type: 3}
+  - {fileID: 5443747687325301563, guid: 76e30fdca32537f4eb6d965b2d7e4148, type: 3}
+  - {fileID: 5443747687325301563, guid: 35f5049c5620cb9418d5a3cb5f0c1732, type: 3}
+  - {fileID: 5443747687325301563, guid: dbbc3ca6f5f2d934dba0ed11286366d3, type: 3}
+  - {fileID: 5443747687325301563, guid: 688b526a1ab1da1489464f5847f49ae8, type: 3}

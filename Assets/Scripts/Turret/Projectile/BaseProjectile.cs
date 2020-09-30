@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseProjectile : MonoBehaviour {
     public GameObject target;
+    public new string name;
     public float speed = 1;
     public float damage = 1;
 

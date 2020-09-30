@@ -16,6 +16,8 @@ public class ReGrid : MonoBehaviour {
 
     public void Generate() {
         Debug.Log("Generating grid");
+        Vector3 oldScale = transform.parent.localScale;
+        transform.parent.localScale = Vector3.one;
         if(transform.Find("Grid Parent")) {
             DestroyImmediate(transform.Find("Grid Parent").gameObject);
         }
@@ -38,10 +40,12 @@ public class ReGrid : MonoBehaviour {
                 ToggleTileType(grid[x + (y * gridX)], TileType.Buildable);
             }
         }
+        transform.parent.localScale = oldScale;
     }
 
     public GameObject ToggleTileType(GameObject oldGo, TileType newTileType) {
         Tile oldTile = oldGo.GetComponent<Tile>();
+        Debug.Log(tiles);
         GameObject newGo = grid[oldTile.position.x + (oldTile.position.y * gridX)] = Instantiate(tiles[newTileType], oldGo.transform.position, oldGo.transform.rotation, gridParent.transform);
         newGo.name = oldGo.name;
         Tile newTile = newGo.GetComponent<Tile>();
@@ -64,6 +68,7 @@ public class ReGrid : MonoBehaviour {
 
     public void Validate() {
         tiles = tileSets.GetTileSet(set);
+        tile = tiles[TileType.Buildable];
     }
 
     private void OnValidate() {
@@ -71,6 +76,7 @@ public class ReGrid : MonoBehaviour {
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ReGrid))]
 public class GridEditor : Editor {
     public override void OnInspectorGUI() {
@@ -78,11 +84,9 @@ public class GridEditor : Editor {
         ReGrid grid = (ReGrid) target;
 
         if(GUILayout.Button("Generate")) {
-            grid.Generate();
-        }
-
-        if(GUILayout.Button("Validate")) {
             grid.Validate();
+            grid.Generate();
         }
     }
 }
+#endif

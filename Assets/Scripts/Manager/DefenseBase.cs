@@ -1,21 +1,17 @@
-﻿using System.Collections;
+﻿using ReTD.Helpers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DefenseBase : MonoBehaviour {
-    private GameManager defenseBase; 
+    private GameManager gameManager; 
     
     void Awake() {
-        defenseBase = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        gameManager = Helpers.GetGameManager();
     }
 
-    void Update() {
-        
-    }
-    
-
-    void OnCollisionEnter(Collision collision) {
-        defenseBase.health -= 1;
-        collision.gameObject.GetComponent<BaseEnemy>().Die(false);
+    private void OnTriggerEnter(Collider other) {
+        gameManager.health -= 1;
+        Helpers.GetTypeInParents<BaseEnemy>(other.transform).Die(false);
     }
 }

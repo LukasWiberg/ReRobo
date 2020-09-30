@@ -165,8 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1812175390036906331}
   reGrid: {fileID: 0}
-  maxHealth: 50
-  speed: 6
+  maxHealth: 250
+  speed: 60
 --- !u!54 &4583879697900653569
 Rigidbody:
   m_ObjectHideFlags: 0
