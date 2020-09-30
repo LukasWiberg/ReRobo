@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.Scripts.General {
+namespace ReTD.Helpers {
     class Helpers {
         public static GameManager GetGameManager() {
             return GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();

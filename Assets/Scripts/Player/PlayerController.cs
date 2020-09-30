@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ReTD.UI;
+using ReTD.Helpers;
 
 public class PlayerController : MonoBehaviour {
     [Header("Player Stats")]
@@ -24,15 +26,20 @@ public class PlayerController : MonoBehaviour {
     public GameObject UI;
     public GameObject turretUI;
     public GameObject tileUI;
+    public GameObject genericInteractableUI;
 
     private bool locked = false;
     private GameObject target;
     private InteractableUI activeUI;
     private float verticalSpeed = 0;
 
+    private int turretUILayer, tileLayer;
+
     private void Start() {
         Instantiate(UI, transform);
         Cursor.lockState = CursorLockMode.Locked;
+        turretUILayer = LayerMask.NameToLayer("TurretUI");
+        tileLayer = LayerMask.NameToLayer("Tile");
     }
 
     public void UnlockControlls() {
@@ -57,17 +64,28 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
 
         Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.forward);
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 1f, LayerMask.GetMask(new string[] { "TurretUI", "Tile" }))) {
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hit, 1f, LayerMask.GetMask(new string[] { "TurretUI", "Tile", "Default" }))) {
             if(hit.collider.gameObject != target) {
                 if(activeUI) {
                     Destroy(activeUI.gameObject);
                 }
                 target = hit.collider.gameObject;
-                if(target.layer == LayerMask.NameToLayer("TurretUI")) {
-                    activeUI = Instantiate(turretUI, transform).GetComponent<InteractableUI>();
-                } else {
-                    activeUI = Instantiate(tileUI, transform).GetComponent<InteractableUI>();
+                switch(target.layer) {
+                    case (int) Layer.Tile: 
+                        activeUI = Instantiate(tileUI, transform).GetComponent<InteractableUI>();
+                        break;
+                    case (int) Layer.TurretUI:
+                        activeUI = Instantiate(turretUI, transform).GetComponent<InteractableUI>();
+                        break;
                 }
+
+                if(!activeUI) {
+                    if(target.tag == "Player") {
+                        activeUI = Instantiate(genericInteractableUI, transform).GetComponent<InteractableUI>();
+                        activeUI.SetText(Helpers.GetTypeInParents<GenericUIText>(target.transform).text);
+                    }
+                }
+
                 activeUI.target = target;
             }
         } else {

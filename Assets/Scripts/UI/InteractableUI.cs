@@ -17,4 +17,8 @@ public class InteractableUI : MonoBehaviour {
     public void Interact() {
         targetEvent.Invoke();
     }
+
+    public void SetText(string text) {
+        this.text.text = text;
+    }
 }
